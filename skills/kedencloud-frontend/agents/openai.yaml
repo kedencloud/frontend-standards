@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kedencloud Frontend Standards"
+  short_description: "React, TypeScript, generated clients, and testing"
+  default_prompt: "Use $kedencloud-frontend to implement this feature using the repository's shared UI, generated API contracts, and testing standards."
