@@ -2,9 +2,15 @@
 
 A reusable Codex skill for React and TypeScript engineering: shared UI and design tokens, accessible screens, contract-first API generation, automated testing, and delivery gates.
 
-The default stack is React, strict TypeScript, Vite, Tailwind CSS v4, shadcn/ui, TanStack Query/Table, React Hook Form with Zod, React Router, and Lucide React. Testing uses Vitest, React Testing Library, MSW, and Playwright. Orval generates API models, request functions, and Query hooks from pinned ASP.NET Core OpenAPI contracts.
+The default stack is React, strict TypeScript, Vite, Tailwind CSS v4, the supplied/shared UI system (Catalyst in Endorz; shadcn/ui where no system exists), TanStack Query and Table when needed, React Hook Form with Zod, React Router, and Lucide React. Testing uses Vitest, React Testing Library, MSW, and Playwright. Orval generates API models, request functions, and Query hooks from the latest running ASP.NET Core browser gateway contract, with a pinned generator and committed output.
 
 These are Kedencloud conventions, not a formal certification or a claim that every project must use this stack. Existing applications retain their compatible setup; migrations require their own scope.
+
+## Endorz conventions
+
+The standard now reflects both Endorz webapps: small explicit feature-owned components; the supplied Catalyst UI and shared table/status/filter/dialog components; generated Axios clients; manual `npm run generate:api` before deployment without automatic CI generation, checksums or drift scripts; gateway-held OAuth sessions with immediate scoped-cache cleanup; and standard Nginx delivery.
+
+Dialogs and filters preserve background route/query state, discard cancelled drafts, retain request identifiers for safe retry, and use shared notifications. Desktop/mobile behavior, accessibility and screenshots verify shared structure without blindly replacing baselines. Product-specific roles, routes, timer values and deployments remain application requirements.
 
 ## Install
 
@@ -25,6 +31,7 @@ For a repository-local installation instead, copy the skill into `.agents/skills
 - `references/ui.md`: shared components, forms, tables, statuses, layout, accessibility, and performance.
 - `references/api-generation.md`: Orval, transport behavior, tenant-aware cache boundaries, and reproducible generation.
 - `references/testing.md`: frontend unit/component tests, E2E, visual checks, and .NET boundary requirements.
+- `references/sessions-and-access.md`: gateway navigation, cookie/CSRF boundaries, session termination and tenant-aware cache isolation.
 - `references/delivery.md`: CI gates and honest reporting of check outcomes.
 - `templates/frontend-AGENTS.md`: optional frontend instructions to merge into a consuming repository's applicable `AGENTS.md`.
 

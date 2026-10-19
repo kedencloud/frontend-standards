@@ -4,11 +4,10 @@ Discover real commands from package scripts, workspace configuration, and CI; do
 
 For frontend pull requests, the applicable pipeline gates are:
 
-1. Obtain verified pinned OpenAPI contracts; regenerate backend specifications too when owned in the same change/repository.
-2. Generate clients with pinned Orval tooling; reject tracked or untracked generated-output drift. Type check downstream consumers after generation.
-3. Run lint, formatting checks, Vitest unit/component tests, and the production build.
-4. Run the Playwright smoke suite against the built application and appropriate test services. Run shared-component visual checks with a stable rendering environment. Broader browser matrices can run separately according to repository policy.
-5. Run affected backend unit/integration suites when backend contracts or implementation change. Review API breaking changes with the repository's compatibility tool or explicit contract diff review.
+1. Review the manually regenerated and committed gateway client when the contract changed. Do not add automatic generation, checksums or drift scripts to CI.
+2. Run lint, formatting checks, type checking, Vitest unit/component tests and the production build using actual package scripts.
+3. Run relevant Playwright desktop/mobile behavior, accessibility and screenshot checks for changed shared structure or critical journeys in the established test environment. Do not automatically replace baselines.
+4. Run affected backend suites only when backend implementation/contracts are in scope. Review API compatibility with the contract diff.
 
 Independent jobs may run in parallel after their required inputs exist. Required CI failures block completion; a scheduled suite does not silently replace a required pull-request check. Set up branch protection/rulesets only when authorized; do not claim that merely adding a workflow makes its checks mandatory.
 
@@ -22,3 +21,9 @@ Before handing back a feature, check relevant loading/error/empty/success states
 - Material risks, contract dependencies, or approved deviations.
 
 Skill text does not itself enforce these gates. A consuming application must configure commands, workflows, tests, and required checks for its actual environment. Do not claim that a standards-only repository ran an application's build or E2E suite.
+
+## Static runtime and deployment boundaries
+
+Build with the pinned Node/package manager and lockfile, then copy only production assets into the standard unprivileged Nginx runtime. Keep test harnesses/artifacts out of production routing. Configure same-origin `/api` proxying, Cookie/Set-Cookie and correct host/protocol forwarding, while preserving the gateway's security assumptions. SPA fallback applies to application routes, not failed API requests. Do not add a custom Node server/proxy.
+
+Use trusted local HTTPS when verifying Secure cookies. Local OrbStack/Kubernetes manifests are development conveniences and do not establish hosted deployment readiness. Browser code uses its own origin's `/api`; internal gateway addresses and secrets stay in server/deployment settings. A mocked HTTP browser test does not prove real secure-cookie or hosted SSO behavior.
