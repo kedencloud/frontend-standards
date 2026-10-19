@@ -31,3 +31,11 @@ Never delete, skip, weaken assertions, disable suites, inflate retries, lower th
 - [Vitest](https://vitest.dev/guide/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/), [user-event](https://testing-library.com/docs/user-event/intro/), [MSW](https://mswjs.io/docs/)
 - [Playwright introduction](https://playwright.dev/docs/intro), [best practices](https://playwright.dev/docs/best-practices), [visual comparisons](https://playwright.dev/docs/test-snapshots)
 - [xUnit](https://xunit.net/), [WebApplicationFactory integration tests](https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0), [Testcontainers for .NET](https://dotnet.testcontainers.org/)
+
+## Endorz regression boundaries
+
+For protected shells, cover immediate content removal on sign-out/expiry/401, cancellation and late responses, user/organisation cache replacement, safe cross-tab session-ended notifications, and the distinction between session denial and a business-operation 403. Test actual clicks/submissions to gateway navigation endpoints with simulated document responses, rather than asserting only a URL string.
+
+For dialogs and filters, cover keyboard/focus restoration, draft discard, no request on cancellation, background route/query preservation, pending duplicate/dismissal guards, stable retry identifiers, applied versus draft filters, and success/error toast behavior. Shared layout changes need desktop/mobile browser and screenshot checks; inspect baseline changes instead of accepting them blindly.
+
+MSW and browser routing prove frontend behavior against synthetic contracts. They do not prove server authorization, cross-service tenant isolation, real Kinde SSO logout or trusted Secure-cookie behavior. Report those boundaries accurately and run the relevant backend/local HTTPS checks when they are in scope.
